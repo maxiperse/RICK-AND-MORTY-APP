@@ -54,7 +54,7 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        <h1>Rick and Morty Characters</h1>
+        <h1>Personajes Rick and Morty</h1>
         <p>Listado inicial</p>
         <div className="stats">
           <span>Total: {totalCount}</span>
