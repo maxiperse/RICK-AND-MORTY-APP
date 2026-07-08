@@ -113,6 +113,9 @@ function App() {
           />
         </div>
       </div>
+      <footer className="app-footer">
+        <p><strong>Integrantes:</strong> [Maximiliano Robles]</p>
+      </footer>
     </div>
   );
 }

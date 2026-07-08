@@ -187,6 +187,46 @@ h1 {
   cursor: pointer;
 }
 
+/* Footer */
+.app-footer {
+  margin-top: 22px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .main-and-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+
+  .main-and-sidebar .sidebars {
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+  }
+
+  .favorites-panel, .blocked-panel {
+    min-width: 220px;
+    flex: 0 0 auto;
+  }
+
+  .character-info h2 { font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.25rem; }
+  .search-bar input { max-width: 100%; padding: 10px; }
+  .cards-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .favorite-item img, .blocked-item img { width: 40px; height: 40px; }
+}
+
 .character-card {
   border: 1px solid #ddd;
   border-radius: 16px;
