@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useFetch from './hooks/useFetch';
 import SearchBar from './components/SearchBar';
 import FavoritesPanel from './components/FavoritesPanel';
+import BlockedPanel from './components/BlockedPanel';
 import './App.css';
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
       // If blocked, also remove from favorites
       setFavorites((prev) => prev.filter((f) => f.id !== character.id));
     }
+  }
+
+  function handleUnblock(id) {
+    setBlockedIds((prev) => prev.filter((x) => x !== id));
   }
 
   function isFavorite(id) {
@@ -100,7 +105,13 @@ function App() {
           )}
         </main>
 
-        <FavoritesPanel favorites={favorites} onRemove={(id) => setFavorites((prev) => prev.filter((f) => f.id !== id))} />
+        <div className="sidebars">
+          <FavoritesPanel favorites={favorites} onRemove={(id) => setFavorites((prev) => prev.filter((f) => f.id !== id))} />
+          <BlockedPanel
+            blockedItems={data?.results?.filter((c) => blockedIds.includes(c.id)) ?? []}
+            onUnblock={handleUnblock}
+          />
+        </div>
       </div>
     </div>
   );
