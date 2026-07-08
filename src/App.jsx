@@ -16,6 +16,22 @@ function App() {
 
   const [favorites, setFavorites] = useState([]);
 
+  const [blockedIds, setBlockedIds] = useState([]);
+
+  function isBlocked(id) {
+    return blockedIds.includes(id);
+  }
+
+  function toggleBlock(character) {
+    if (isBlocked(character.id)) {
+      setBlockedIds((prev) => prev.filter((x) => x !== character.id));
+    } else {
+      setBlockedIds((prev) => [...prev, character.id]);
+      // If blocked, also remove from favorites
+      setFavorites((prev) => prev.filter((f) => f.id !== character.id));
+    }
+  }
+
   function isFavorite(id) {
     return favorites.some((f) => f.id === id);
   }
@@ -28,11 +44,18 @@ function App() {
     }
   }
 
+  const totalCount = data?.info?.count ?? data?.results?.length ?? 0;
+
   return (
     <div className="app-container">
       <header>
         <h1>Rick and Morty Characters</h1>
         <p>Listado inicial</p>
+        <div className="stats">
+          <span>Total: {totalCount}</span>
+          <span>Favoritos: {favorites.length}</span>
+          <span>Bloqueados: {blockedIds.length}</span>
+        </div>
       </header>
 
       <SearchBar value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} />
@@ -44,7 +67,9 @@ function App() {
         <main className="main">
           {data && data.results && (
             <div className="cards-grid">
-              {filteredCharacters.map((character) => (
+                  {filteredCharacters
+                    .filter((c) => !isBlocked(c.id))
+                    .map((character) => (
                 <article key={character.id} className="character-card">
                   <img src={character.image} alt={character.name} />
                   <div className="character-info">
@@ -52,15 +77,25 @@ function App() {
                     <p>{character.species}</p>
                     <p>Estado: {character.status}</p>
                   </div>
-                  <button
-                    className={`favorite-btn ${isFavorite(character.id) ? 'fav' : ''}`}
-                    onClick={() => toggleFavorite(character)}
-                    aria-label={isFavorite(character.id) ? `Quitar ${character.name} de favoritos` : `Agregar ${character.name} a favoritos`}
-                  >
-                    {isFavorite(character.id) ? '★' : '☆'}
-                  </button>
+                      <div className="card-actions">
+                        <button
+                          className={`favorite-btn ${isFavorite(character.id) ? 'fav' : ''}`}
+                          onClick={() => toggleFavorite(character)}
+                          aria-label={isFavorite(character.id) ? `Quitar ${character.name} de favoritos` : `Agregar ${character.name} a favoritos`}
+                        >
+                          {isFavorite(character.id) ? '★' : '☆'}
+                        </button>
+
+                        <button
+                          className={`block-btn ${isBlocked(character.id) ? 'blocked' : ''}`}
+                          onClick={() => toggleBlock(character)}
+                          aria-label={isBlocked(character.id) ? `Desbloquear ${character.name}` : `Bloquear ${character.name}`}
+                        >
+                          {isBlocked(character.id) ? 'Desbloquear' : 'Bloquear'}
+                        </button>
+                      </div>
                 </article>
-              ))}
+                  ))}
             </div>
           )}
         </main>
