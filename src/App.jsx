@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useFetch from './hooks/useFetch';
+import useLocalStorage from './hooks/useLocalStorage';
 import SearchBar from './components/SearchBar';
 import FavoritesPanel from './components/FavoritesPanel';
 import BlockedPanel from './components/BlockedPanel';
@@ -15,9 +16,8 @@ function App() {
     return character.name.toLowerCase().includes(term);
   }) ?? [];
 
-  const [favorites, setFavorites] = useState([]);
-
-  const [blockedIds, setBlockedIds] = useState([]);
+  const [favorites, setFavorites] = useLocalStorage('ram_favorites', []);
+  const [blockedIds, setBlockedIds] = useLocalStorage('ram_blocked', []);
 
   function isBlocked(id) {
     return blockedIds.includes(id);
