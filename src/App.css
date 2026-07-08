@@ -27,6 +27,20 @@ h1 {
   color: #900;
 }
 
+.search-bar {
+  margin-bottom: 18px;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 480px;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
 .cards-grid {
   display: grid;
   gap: 18px;
